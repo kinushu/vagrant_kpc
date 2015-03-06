@@ -29,4 +29,4 @@ gem install bundler
 # vagrant 共有フォルダマウント失敗時の対応
 /etc/init.d/vboxadd setup
 
-service httpd start
+# service httpd start
