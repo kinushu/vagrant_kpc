@@ -8,8 +8,9 @@ yum install -y httpd bind-utils
 
 # ruby 
 cd /usr/local
-git clone git://github.com/sstephenson/rbenv.git rbenv
-git clone git://github.com/sstephenson/ruby-build.git rbenv/plugins/ruby-build
+git clone https://github.com/sstephenson/rbenv.git rbenv
+git clone https://github.com/sstephenson/ruby-build.git rbenv/plugins/ruby-build
+
 
 touch /etc/profile.d/rbenv.sh
 echo 'export RBENV_ROOT="/usr/local/rbenv"' >> /etc/profile.d/rbenv.sh
