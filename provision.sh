@@ -1,10 +1,13 @@
 #!/bin/sh
 
+
 yum update -y
 yum install -y git gcc gcc-c++ openssl-devel readline-devel
 yum install -y httpd bind-utils
 
 # TODO:iptable の設定
+
+echo 'gem: --no-ri --no-rdoc' >> ~/.gemrc
 
 # ruby 
 cd /usr/local
@@ -23,7 +26,7 @@ rbenv install 2.1.5
 rbenv global 2.1.5
 rbenv rehash
 
-gem update --no-document --quiet
+gem update --no-ri --no-rdoc
 gem install bundler
 
 # vagrant 共有フォルダマウント失敗時の対応
