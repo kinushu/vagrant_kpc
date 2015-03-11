@@ -1,8 +1,11 @@
 #!/bin/sh
 
-
 yum update -y
-yum install -y git gcc gcc-c++ openssl-devel readline-devel
+yum install -y git gcc gcc-c++
+yum install -y make zlib-devel libxml2-devel libxslt-devel readline-devel openssl-devel
+yum install -y httpd httpd-devel curl-devel
+yum -y install ImageMagick ImageMagick-devel
+yum -y install mysql-server mysql-devel
 yum install -y httpd bind-utils
 
 # TODO:iptable の設定
@@ -10,15 +13,20 @@ yum install -y httpd bind-utils
 echo 'gem: --no-ri --no-rdoc' >> ~/.gemrc
 
 # ruby 
+mkdir -p /usr/local/rbenv
+cd /usr/local/ 
+groupadd rbenv
+chgrp -R rbenv rbenv
+chmod -R g+rwxXs rbenv 
+
 cd /usr/local
 git clone https://github.com/sstephenson/rbenv.git rbenv
 git clone https://github.com/sstephenson/ruby-build.git rbenv/plugins/ruby-build
 
-
 touch /etc/profile.d/rbenv.sh
 echo 'export RBENV_ROOT="/usr/local/rbenv"' >> /etc/profile.d/rbenv.sh
 echo 'export PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}"' >> /etc/profile.d/rbenv.sh
-echo 'eval "$(rbenv init --no-rehash -)"' >> /etc/profile.d/rbenv.sh
+echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 
 source /etc/profile.d/rbenv.sh
 
@@ -27,9 +35,9 @@ rbenv global 2.1.5
 rbenv rehash
 
 gem update --no-ri --no-rdoc
-gem install bundler
+gem install bundler --no-ri --no-rdoc
+gem install passenger --no-ri --no-rdoc
+passenger-install-apache2-module
 
-# vagrant 共有フォルダマウント失敗時の対応
-/etc/init.d/vboxadd setup
-
-# service httpd start
+chkconfig httpd on --level 2345
+service httpd start

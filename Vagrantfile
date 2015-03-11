@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# vagrunt up 前に以下を実行してください
+# vagrant plugin install vagrant-reload
+
 Vagrant.configure("2") do |config|
   config.vm.hostname = "kpcsvr"
   config.vm.box      = "CentOS-6.5"
@@ -14,5 +17,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :shell, :path => "network_setting.sh"
   config.vm.provision :shell, :path => "provision.sh"
+  config.vm.provision :reload
+  config.vm.provision :shell, :path => "prepare_vagrant_shared.sh"
   config.vm.provision :reload
 end
