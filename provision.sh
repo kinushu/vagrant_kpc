@@ -8,7 +8,6 @@ yum -y install ImageMagick ImageMagick-devel
 yum -y install mysql-server mysql-devel
 yum install -y httpd bind-utils
 
-# TODO:iptable の設定
 
 echo 'gem: --no-ri --no-rdoc' >> ~/.gemrc
 
@@ -39,5 +38,11 @@ gem install bundler --no-ri --no-rdoc
 gem install passenger --no-ri --no-rdoc
 passenger-install-apache2-module
 
+# httpd
 chkconfig httpd on --level 2345
 service httpd start
+
+# iptable の設定
+echo '-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT' >> /etc/sysconfig/iptables
+chkconfig iptables on --level 2345
+service iptables restart
