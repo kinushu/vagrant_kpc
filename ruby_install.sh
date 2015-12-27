@@ -19,8 +19,8 @@ echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 
 source /etc/profile.d/rbenv.sh
 
-rbenv install 2.1.5
-rbenv global 2.1.5
+rbenv install 2.2.4
+rbenv global 2.2.4
 rbenv rehash
 
 echo "ruby version"
