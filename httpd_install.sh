@@ -5,7 +5,7 @@ yum install -y httpd httpd-devel curl-devel bind-utils
 setenforce 0
 mkdir -p /var/logs/httpd
 
-echo 'tm21server' >> /var/www/html/index.html
+echo 'kpcserver' >> /var/www/html/index.html
 
 chkconfig httpd on --level 2345
 service httpd start
