@@ -25,3 +25,6 @@ rbenv rehash
 
 echo "ruby version"
 ruby -v
+
+gem update
+gem install bundler

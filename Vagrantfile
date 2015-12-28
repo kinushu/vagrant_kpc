@@ -13,14 +13,18 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.provider :virtualbox do |vb|
   end
-  config.vm.synced_folder "share", "/home/vagrant/share"
+#  config.vm.synced_folder "share", "/home/vagrant/share"
 
   config.vm.provision :shell, :path => "network_setting.sh"
   config.vm.provision :shell, :path => "yum_install.sh"
+
   config.vm.provision :shell, :path => "ruby_install.sh"
   config.vm.provision :shell, :path => "httpd_install.sh"
   config.vm.provision :shell, :path => "gem_install.sh"
-  config.vm.provision :reload
+
+  config.vm.provision :shell, :path => "mysql_install.sh"
+
+#  config.vm.provision :reload
 #  config.vm.provision :shell, :path => "prepare_vagrant_shared.sh"
 #  config.vm.provision :reload
 end

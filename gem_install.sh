@@ -1,7 +1,6 @@
 #!/bin/sh
 
-gem update
-gem install bundler
+gem install pry trash
 
 gem install passenger
 passenger-install-apache2-module
