@@ -5,6 +5,11 @@
 # vagrant plugin install vagrant-reload
 
 Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 1
+  end
+
   config.vm.hostname = "kpcsvr"
   config.vm.box      = "CentOS-6.5"
   config.vm.box_url  = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140110.box"
