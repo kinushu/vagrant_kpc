@@ -32,8 +32,21 @@
         dest=/etc/localtime
         state=link
         force=yes
+
     - name: httpd running
       service: name=httpd state=running enabled=yes
+
+    - name: find passenger config source
+      command: '/usr/local/rbenv/shims/passenger-install-apache2-module --snippet'
+      register: passenger_config
+    - name: set passenger_config
+      blockinfile:
+        dest: /etc/httpd/conf.d/passenger.conf
+        create: yes
+        block: |
+          {{passenger_config.stdout}}
+        marker: "# {mark} ANSIBLE MANAGED BLOCK for passenger.conf"
+
     - name: allow port http 80
       lineinfile:
         dest: /etc/sysconfig/iptables
