@@ -33,13 +33,27 @@
         state=link
         force=yes
 
-    - name: httpd running
-      service: name=httpd state=running enabled=yes
+    - name: httpd.conf ServerName
+      notify: restart httpd
+      lineinfile:
+        dest: /etc/httpd/conf/httpd.conf
+        regexp: "^ServerName "
+        line: "ServerName 127.0.0.1:80"
+        insertafter: "^#ServerName .+:80"
+
+    - name: httpd.conf NameVirtualHost
+      notify: restart httpd
+      lineinfile:
+        dest: /etc/httpd/conf/httpd.conf
+        regexp: "^NameVirtualHost "
+        line: "NameVirtualHost *:80"
+        insertafter: "^#NameVirtualHost"
 
     - name: find passenger config source
       command: '/usr/local/rbenv/shims/passenger-install-apache2-module --snippet'
       register: passenger_config
     - name: set passenger_config
+      notify: restart httpd
       blockinfile:
         dest: /etc/httpd/conf.d/passenger.conf
         create: yes
@@ -47,12 +61,16 @@
           {{passenger_config.stdout}}
         marker: "# {mark} ANSIBLE MANAGED BLOCK for passenger.conf"
 
+    - name: httpd running
+      service: name=httpd state=running enabled=yes
+
     - name: allow port http 80
       lineinfile:
         dest: /etc/sysconfig/iptables
         line: "-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT"
         insertafter: "^:OUTPUT "
       notify: restart iptables
+
     - name: mysql utf8 default
       ini_file:
         dest: /etc/my.cnf
