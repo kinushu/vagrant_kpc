@@ -10,6 +10,7 @@ yum install -y zlib-devel libxml2-devel libxslt-devel readline-devel openssl-dev
 yum -y install ImageMagick ImageMagick-devel
 yum install -y httpd httpd-devel curl-devel bind-utils
 yum install -y sqlite sqlite-devel
+yum install -y ansible
 
 # 時刻設定
 yum -y install ntp

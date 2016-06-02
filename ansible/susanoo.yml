@@ -1,0 +1,25 @@
+# This playbook is for Amazon Linux
+- hosts: susanoo
+  become: yes
+  become_user: root
+  gather_facts: no
+  vars:
+    zone: Asia/Tokyo
+    zoneinfo_path: /usr/share/zoneinfo/Asia/Tokyo
+  tasks:
+    - name: set zone to /etc/sysconfig/clock zone
+      replace: >
+        dest=/etc/sysconfig/clock
+        regexp='^ZONE=\"UTC\"'
+        replace='ZONE="{{zone}}"'
+    - name: set zone to /etc/sysconfig/clock UTC
+      lineinfile:
+        dest: /etc/sysconfig/clock
+        regexp:  '^UTC=.+$'
+        line: 'UTC=false'
+    - name: set localtime
+      file: >
+        src={{zoneinfo_path}}
+        dest=/etc/localtime
+        state=link
+        force=yes
