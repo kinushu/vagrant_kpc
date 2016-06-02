@@ -1,6 +1,9 @@
 #!/bin/sh
 
 yum update -y
+
+yum install -y epel-release
+
 yum install -y gcc gcc-c++ make
 yum install -y git tig
 yum install -y zlib-devel libxml2-devel libxslt-devel readline-devel openssl-devel
