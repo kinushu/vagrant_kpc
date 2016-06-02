@@ -6,6 +6,15 @@
   vars:
     zone: Asia/Tokyo
     zoneinfo_path: /usr/share/zoneinfo/Asia/Tokyo
+
+  handlers:
+    - name: restart httpd
+      service: name=httpd state=restarted
+    - name: restart iptables
+      service: name=iptables state=restarted
+    - name: restart mysqld
+      service: name=mysqld state=restarted
+
   tasks:
     - name: set zone to /etc/sysconfig/clock zone
       replace: >
@@ -23,3 +32,18 @@
         dest=/etc/localtime
         state=link
         force=yes
+    - name: httpd running
+      service: name=httpd state=running enabled=yes
+    - name: allow port http 80
+      lineinfile:
+        dest: /etc/sysconfig/iptables
+        line: "-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT"
+        insertafter: "^:OUTPUT "
+      notify: restart iptables
+    - name: mysql utf8 default
+      ini_file:
+        dest: /etc/my.cnf
+        section: mysqld
+        option: character-set-server
+        value: utf8
+      notify: restart mysqld
