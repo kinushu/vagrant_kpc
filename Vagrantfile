@@ -10,6 +10,14 @@ Vagrant.configure("2") do |config|
     v.cpus = 1
   end
 
+  # capistranoなどからログインできるように
+  config.vm.network :forwarded_port, guest: 22, host: 12222, id: "ssh"
+  config.ssh.guest_port = 12222
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+  # config.ssh.shell = "sh"
+  config.ssh.insert_key = "false"
+
   config.vm.hostname = "kpcsvr"
   config.vm.box      = "CentOS-6.5"
   config.vm.box_url  = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140110.box"
