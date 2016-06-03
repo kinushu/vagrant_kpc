@@ -15,7 +15,6 @@ Vagrant.configure("2") do |config|
   config.ssh.guest_port = 12222
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
-  # config.ssh.shell = "sh"
   config.ssh.insert_key = "false"
 
   config.vm.hostname = "kpcsvr"
