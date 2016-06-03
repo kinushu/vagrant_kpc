@@ -38,7 +38,7 @@
       lineinfile:
         dest: /etc/httpd/conf/httpd.conf
         regexp: "^ServerName "
-        line: "ServerName 127.0.0.1:80"
+        line: "ServerName localhost:80"
         insertafter: "^#ServerName .+:80"
 
     - name: httpd.conf NameVirtualHost
